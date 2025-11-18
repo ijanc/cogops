@@ -1,0 +1,62 @@
+[package]
+name = "batch-cognito"
+version = "0.1.0"
+authors = ["murilo ijanc' <murilo@ijanc.org>"]
+edition = "2024"
+homepage = "https://ijanc.org"
+license = "ISC"
+repository = "https://github.com/ijanc/batch-cognito"
+rust-version = "1.89.0"
+description = ""
+
+[dependencies]
+anyhow = "1.0.100"
+aws-config = { version = "1.8.10", features = ["behavior-version-latest"] }
+aws-sdk-cognitoidentityprovider = "1.103.0"
+clap = { version = "4.5.52", features = ["derive"] }
+env_logger = "0.11.8"
+log = "0.4.28"
+tokio = { version = "1.48.0", features = ["macros", "rt-multi-thread"] }
+
+[lints.rust]
+absolute_paths_not_starting_with_crate = "warn"
+non_ascii_idents = "warn"
+unit-bindings = "warn"
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(coverage)', 'cfg(coverage_nightly)'] }
+tail_expr_drop_order = "warn"
+unsafe_op_in_unsafe_fn = "warn"
+unused_unsafe = "warn"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[profile.dev]
+debug = false
+
+[profile.test]
+debug = false
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+strip = "symbols"
+debug = false
+panic = "abort"
+
+[profile.release-with-debug]
+inherits = "release"
+strip = false
+debug = true
+
+[profile.coverage]
+inherits = "release"
+opt-level = 2
+codegen-units = 256
+lto = "thin"
+debug-assertions = true
+overflow-checks = true
+
+[profile.dev-no-debug-assertions]
+inherits = "dev"
+debug-assertions = false
