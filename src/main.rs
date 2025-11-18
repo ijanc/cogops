@@ -14,15 +14,6 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-// accept groups name
-// accept file with emails
-// accept operation
-// accept concorrency or size group == 1 -> size email se nao uso o grupo
-// accept timeout
-// accept poolid
-
-mod helper;
-
 use std::collections::HashMap;
 use std::path::Path;
 use std::path::PathBuf;
