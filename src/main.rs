@@ -24,6 +24,7 @@ use anyhow::{Context, Result};
 use aws_sdk_cognitoidentityprovider::Client as CognitoClient;
 use aws_sdk_cognitoidentityprovider::types::UserType;
 use clap::{ArgAction, Parser, Subcommand};
+use indicatif::{ProgressBar, ProgressStyle};
 use tokio::fs::File;
 use tokio::io::{self, AsyncBufReadExt, AsyncWrite, AsyncWriteExt, BufReader};
 use tokio::sync::Semaphore;
@@ -232,11 +233,6 @@ struct GroupOperationArgs {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // let users = read_sync_file_to_map(".mail_sync").await?;
-
-    // for (email, username) in &users {
-    // println!("{email} => {username}");
-    // }
     let cli = Cli::parse();
     init_tracing(cli.verbose);
 
@@ -617,7 +613,20 @@ pub async fn add_users_to_groups_from_files(
 
     // 2. Load target e-mails
     let emails = load_email_list(emails_list_path).await?;
-    info!(total_emails = emails.len(), "loaded target e-mail list");
+    let total_emails = emails.len();
+    info!(total_emails, "loaded target e-mail list");
+
+    let pb = Arc::new({
+        let bar = ProgressBar::new(total_emails as u64);
+        bar.set_style(
+            ProgressStyle::with_template(
+                "[{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} {msg}",
+            )
+            .unwrap_or_else(|_| ProgressStyle::default_bar()),
+        );
+        bar.set_message("processing users");
+        bar
+    });
 
     let semaphore = Arc::new(Semaphore::new(concurrency));
     let mut handles: Vec<JoinHandle<()>> = Vec::with_capacity(emails.len());
@@ -635,6 +644,8 @@ pub async fn add_users_to_groups_from_files(
         let client_clone = client.clone();
         let pool_id = pool_id.to_string();
         let groups = groups.to_vec();
+        let email_clone = email.clone();
+        let pb_clone = pb.clone();
 
         let handle = tokio::spawn(async move {
             let _permit = permit; // keep permit alive for the duration of this task
@@ -648,19 +659,21 @@ pub async fn add_users_to_groups_from_files(
             .await
             {
                 error!(
-                    %email,
+                    email = %email_clone,
                     %username,
                     error = ?err,
                     "failed to add user to one or more groups"
                 );
             } else {
                 info!(
-                    %email,
+                    email = %email_clone,
                     %username,
                     groups = ?groups,
                     "user successfully processed for all groups"
                 );
             }
+
+            pb_clone.inc(1);
         });
 
         handles.push(handle);
@@ -674,6 +687,7 @@ pub async fn add_users_to_groups_from_files(
         }
     }
 
+    pb.finish_with_message("done");
     info!("finished processing all users for add-groups operation");
     Ok(())
 }
