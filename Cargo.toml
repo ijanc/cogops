@@ -1,5 +1,5 @@
 [package]
-name = "batch-cognito"
+name = "cogops"
 version = "0.1.0"
 authors = ["murilo ijanc' <murilo@ijanc.org>"]
 edition = "2024"
