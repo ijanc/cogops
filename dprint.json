@@ -1,5 +1,8 @@
 {
   "lineWidth": 79,
+  "markdown": {
+    "textWrap": "always"
+  },
   "json": {
     "indentWidth": 2
   },
