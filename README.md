@@ -149,7 +149,9 @@ All emails will be normalized (lowercase, trim) before lookup.
 Example:
 
 ```
-cogops add --pool-id us-east-1_ABC123   --sync-file cognito_sync.csv   --emails-file to_add.txt   --group admin   --group managers   --concurrency 10
+cogops add --pool-id us-east-1_ABC123 --sync-file cognito_sync.csv \
+    --emails-file to_add.txt --group admin --group managers \
+    --concurrency 10
 ```
 
 Where `to_add.txt` might contain:
@@ -173,7 +175,8 @@ them.
 Example:
 
 ```
-cogops del   --pool-id us-east-1_ABC123   --sync-file cognito_sync.csv   --emails-file to_remove.txt   --group admin   --concurrency 5
+cogops del --pool-id us-east-1_ABC123 --sync-file cognito_sync.csv \
+    --emails-file to_remove.txt --group admin   --concurrency 5
 ```
 
 ## Logging and verbosity
