@@ -48,13 +48,12 @@ const VERSION: &str = concat!(
     about = "Batch operations for AWS Cognito user pools",
     version = VERSION,
     author,
-    propagate_version = true
 )]
 struct Cli {
     /// Increase verbosity (use -v, -vv, ...).
     ///
     /// When no RUST_LOG is set, a single -v switches the log level to DEBUG.
-    #[arg(short, long, global = true, action = ArgAction::Count)]
+    #[arg(short, long, action = ArgAction::Count)]
     verbose: u8,
 
     #[command(subcommand)]
