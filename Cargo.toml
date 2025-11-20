@@ -5,19 +5,19 @@ authors = ["murilo ijanc' <murilo@ijanc.org>"]
 edition = "2024"
 homepage = "https://ijanc.org"
 license = "ISC"
-repository = "https://github.com/ijanc/batch-cognito"
+repository = "https://got.ijanc.org/?action=summary&path=cogops"
 rust-version = "1.89.0"
-description = ""
+description = "Tool for batch ops on AWS Cognito"
 
 [dependencies]
-anyhow = "1.0.100"
-aws-config = { version = "1.8.10", features = ["behavior-version-latest"] }
-aws-sdk-cognitoidentityprovider = "1.103.0"
-clap = { version = "4.5.52", features = ["derive", "env"] }
-indicatif = "0.18.3"
-tokio = { version = "1.48.0", features = ["full"] }
-tracing = "0.1.41"
-tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
+anyhow = "=1.0.100"
+aws-config = { version = "=1.8.10", features = ["behavior-version-latest"] }
+aws-sdk-cognitoidentityprovider = "=1.103.0"
+clap = { version = "=4.5.53", features = ["derive", "env"] }
+indicatif = "=0.18.3"
+tokio = { version = "=1.48.0", features = ["full"] }
+tracing = "=0.1.41"
+tracing-subscriber = { version = "=0.3.20", features = ["env-filter"] }
 
 [lints.rust]
 absolute_paths_not_starting_with_crate = "warn"
