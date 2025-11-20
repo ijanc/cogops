@@ -32,9 +32,7 @@ use tokio::task::JoinHandle;
 use tracing::{debug, error, info};
 use tracing_subscriber::EnvFilter;
 
-const LONG_VERSION: &str = concat!(
-    env!("CARGO_PKG_NAME"),
-    " ",
+const VERSION: &str = concat!(
     env!("CARGO_PKG_VERSION"),
     " (",
     env!("GIT_HASH", "unknown"),
@@ -46,10 +44,9 @@ const LONG_VERSION: &str = concat!(
 /// Batch operations for AWS Cognito user pools.
 #[derive(Debug, Parser)]
 #[command(
-    name = "batch-cognito",
+    name = env!("CARGO_PKG_NAME"),
     about = "Batch operations for AWS Cognito user pools",
-    version = env!("CARGO_PKG_VERSION"),
-    long_version = LONG_VERSION,
+    version = VERSION,
     author,
     propagate_version = true
 )]
@@ -368,6 +365,7 @@ async fn run_add_groups(args: AddArgs) -> Result<()> {
     Ok(())
 }
 
+#[allow(dead_code)]
 async fn run_remove_groups(args: CommonOperationArgs) -> Result<()> {
     info!(
         pool_id = %args.pool_id,
