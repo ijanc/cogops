@@ -123,7 +123,7 @@ writes them to a CSV file.
 Example:
 
 ```
-cogops sync   --pool-id us-east-1_ABC123   --emails-file cognito_sync.csv
+cogops sync --pool-id us-east-1_ABC123 --sync-file .sync
 ```
 
 Output file format:
@@ -149,7 +149,7 @@ All emails will be normalized (lowercase, trim) before lookup.
 Example:
 
 ```
-cogops add --pool-id us-east-1_ABC123 --sync-file cognito_sync.csv \
+cogops add --pool-id us-east-1_ABC123 --sync-file .sync \
     --emails-file to_add.txt --group admin --group managers \
     --concurrency 10
 ```
