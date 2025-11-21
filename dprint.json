@@ -9,7 +9,7 @@
   "exec": {
     "cwd": "${configDir}",
     "commands": [{
-      "command": "rustfmt",
+      "command": "rustfmt --edition 2024",
       "exts": ["rs"],
       "cacheKeyFiles": [
         ".rustfmt.toml",
