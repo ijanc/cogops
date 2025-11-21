@@ -73,7 +73,7 @@ cargo --version
 Clone the repository and build the binary:
 
 ```
-git clone https://github.com/ijanc/cogops.git
+git clone ssh://anon@ijanc.org/cogops
 cd cogops
 cargo build --release
 ```
