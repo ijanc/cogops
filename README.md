@@ -72,6 +72,10 @@ cargo --version
 
 Clone the repository and build the binary:
 
+- **Official**: ssh://anon@ijanc.org/cogops
+- Mirror Sourcehut: git@git.sr.ht:~ijanc/cogops
+- Mirror Github: git@github.com:ijanc/cogops.git
+
 ```
 git clone ssh://anon@ijanc.org/cogops
 cd cogops
@@ -98,8 +102,6 @@ export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
 export AWS_REGION=us-east-1
 ```
-
----
 
 ## Commands Overview
 
